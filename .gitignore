@@ -102,7 +102,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-private.json
+.env
 .venv
 env/
 venv/
@@ -131,7 +131,3 @@ dmypy.json
 # PyCharm
 /venv/
 .idea
-.env
-# files
-pg_hba.conf
-private.json

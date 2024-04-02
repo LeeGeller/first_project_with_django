@@ -131,3 +131,6 @@ dmypy.json
 # PyCharm
 /venv/
 .idea
+
+# files
+pg_hba.conf

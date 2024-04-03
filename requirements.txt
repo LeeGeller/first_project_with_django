@@ -1,0 +1,5 @@
+pip
+Django
+ipython
+psycopg2
+pillow

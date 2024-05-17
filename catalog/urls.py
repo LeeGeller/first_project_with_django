@@ -11,6 +11,7 @@ from catalog.views import (
     ProductCreateView,
     ProductUpdateView,
     ProductDeleteView,
+    toggle_activity,
 )
 from sercicies import toggle_activity
 

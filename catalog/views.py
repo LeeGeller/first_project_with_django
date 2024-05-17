@@ -2,7 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
 from django.forms import inlineformset_factory
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     CreateView,
     ListView,
@@ -121,3 +122,14 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
 
     success_url = reverse_lazy("catalog:home")
+
+
+def toggle_activity(request, pk):
+    products = get_object_or_404(Product, pk=pk)
+    if products.is_active:
+        products.is_active = False
+    else:
+        products.is_active = True
+
+    products.save()
+    return redirect(reverse("catalog:home"))

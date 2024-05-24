@@ -32,10 +32,10 @@
                     <a type="button" class="btn btn-sm btn-primary me-2" href="{% url 'blog:post' object.pk %}">Подробнее</a>
                     {% if object.actual_version_indicator %}
                     <a type="button" class="btn btn-sm btn-success me-2"
-                       href="{% url 'blog:toggle_activity' object.pk %}">Активно</a>
+                       href="{% url 'blog:toggle_activity' model='BlogPost' pk=object.pk %}">Активно</a>
                     {% else %}
                     <a type="button" class="btn btn-sm btn-warning me-2"
-                       href="{% url 'blog:toggle_activity' object.pk %}">Не активно</a>
+                       href="{% url 'blog:toggle_activity' model='BlogPost' pk=object.pk %}">Не активно</a>
                     {% endif %}
                 </div>
             </div>

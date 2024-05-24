@@ -10,7 +10,7 @@ from blog.views import (
     PostUpdateView,
     PostDeleteView,
 )
-from sercicies import toggle_activity
+from servicies import toggle_activity
 
 app_name = BlogConfig.name
 
@@ -20,6 +20,6 @@ urlpatterns = [
     path("create/", PostCreateView.as_view(), name="create_post"),
     path("<int:pk>/update/", PostUpdateView.as_view(), name="update_post"),
     path("<int:pk>/delete/", PostDeleteView.as_view(), name="delete_post"),
-    path("activity/<int:pk>/", toggle_activity, name="toggle_activity"),
+    path("activity/<str:model>/<int:pk>/", toggle_activity, name="toggle_activity"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

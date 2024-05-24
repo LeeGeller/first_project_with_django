@@ -42,10 +42,11 @@
                             {% if perms.catalog.cancel_product %}
                             {% if product.is_active %}
                             <a type="button" class="btn btn-outline-success btn-sm"
-                               href="{% url 'catalog:toggle_activity' product.pk %}">Опубликован</a>
+                               href="{% url 'catalog:toggle_activity' model='Product' pk=product.pk %}">Опубликован</a>
                             {% else %}
                             <a type="button" class="btn btn-sm btn-warning me-2"
-                               href="{% url 'catalog:toggle_activity' product.pk %}">Нужна модерация</a>
+                               href="{% url 'catalog:toggle_activity' model='Product' pk=product.pk %}">Нужна
+                                модерация</a>
                             {% endif %}
                             {% endif %}
                             {% if user == product.owner or perms.catalog.change_product_description %}

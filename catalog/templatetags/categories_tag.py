@@ -7,13 +7,11 @@ register = template.Library()
 
 @register.inclusion_tag("catalog/category_list.html", takes_context=True)
 def get_category_items(context):
-    categories_with_products = Category.objects.prefetch_related('product_set').all()
+    categories = Category.objects.all()
 
-    result_dict = {"Все категории": []}
+    result_list = [{"pk": 0, "category_name": "Все категории"}]
 
-    for category in categories_with_products:
-        product_list = list(category.product_set.all())
-        result_dict[category.category_name] = product_list
-        result_dict["Все категории"].extend(product_list)
+    for category in categories:
+        result_list.append({"pk": category.pk, "category_name": category.category_name})
 
-    return {"categories_menu": result_dict}
+    return {"categories_menu": result_list}

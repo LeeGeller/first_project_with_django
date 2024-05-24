@@ -16,6 +16,7 @@ from django.views.generic import (
 
 from catalog.forms import ProductForms, VersionProductForm, ProductModeratorForms
 from catalog.models import Product, ContactsData, VersionProduct, Category
+from servicies import get_category_from_cache
 
 
 class HomeListView(LoginRequiredMixin, ListView):
@@ -127,16 +128,10 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
-    models = Category
+    model = Product
 
-    def get_category_from_cache(self):
-        category_queryset = Category.objects.all()
-        if settings.CACHE_ENABLED:
-            key = "category_name"
-            cache_data = cache.get(key)
-            if cache_data is None:
-                cache_data = category_queryset
-                cache.set(key, cache_data)
-            return cache_data
-        return category_queryset
+    def get_context_data(self, *, object_list=None, **kwargs):
+        return get_category_from_cache
+
+
 

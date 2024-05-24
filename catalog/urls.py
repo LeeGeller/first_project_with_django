@@ -12,7 +12,7 @@ from catalog.views import (
     ProductUpdateView,
     ProductDeleteView, CategoryListView,
 )
-from sercicies import toggle_activity
+from servicies import toggle_activity
 
 app_name = MainappConfig.name
 
@@ -27,7 +27,7 @@ urlpatterns = [
     path(
         "<int:pk>/delete_product/", ProductDeleteView.as_view(), name="delete_product"
     ),
-    path("activity/<int:pk>/", toggle_activity, name="toggle_activity"),
+    path("activity/<str:model>/<int:pk>/", toggle_activity, name="toggle_activity"),
     path("category/<int:pk>/", CategoryListView.as_view(), name="category"),
 ]
 if settings.DEBUG:

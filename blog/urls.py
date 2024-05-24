@@ -9,8 +9,8 @@ from blog.views import (
     PostCreateView,
     PostUpdateView,
     PostDeleteView,
-    toggle_activity,
 )
+from sercicies import toggle_activity
 
 app_name = BlogConfig.name
 

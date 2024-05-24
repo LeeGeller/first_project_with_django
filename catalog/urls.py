@@ -17,7 +17,7 @@ from sercicies import toggle_activity
 app_name = MainappConfig.name
 
 urlpatterns = [
-    path("", cache_page(600)(HomeListView.as_view()), name="home"),
+    path("", HomeListView.as_view(), name="home"),
     path("contactsdata_list/", ContactsListView.as_view(), name="contacts"),
     path("<int:pk>/product_detail/", cache_page(600)(ProductDetailView.as_view()), name="product"),
     path("create_product/", ProductCreateView.as_view(), name="create_product"),

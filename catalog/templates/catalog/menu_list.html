@@ -1,7 +1,6 @@
-<div class="row g-2 px-4">
-    {% for item in menu %}
-    <div class="col-auto">
-        <a class=" p-1 px-2 btn btn-outline-primary" href="{% url item.template %}">{{ item.name }}</a>
-    </div>
-    {% endfor %}
+{% for item in menu %}
+<div class="col-auto">
+    <a class=" p-1 px-2 btn btn-outline-primary" href="{% url item.template %}">{{ item.name }}</a>
 </div>
+{% endfor %}
+

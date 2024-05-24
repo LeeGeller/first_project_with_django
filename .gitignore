@@ -131,7 +131,7 @@ dmypy.json
 # PyCharm
 /venv/
 .idea
-
+.env
 # files
 pg_hba.conf
 private.json

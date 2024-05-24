@@ -10,8 +10,7 @@ from catalog.views import (
     ContactsListView,
     ProductCreateView,
     ProductUpdateView,
-    ProductDeleteView,
-    toggle_activity,
+    ProductDeleteView, CategoryListView,
 )
 from sercicies import toggle_activity
 
@@ -29,6 +28,7 @@ urlpatterns = [
         "<int:pk>/delete_product/", ProductDeleteView.as_view(), name="delete_product"
     ),
     path("activity/<int:pk>/", toggle_activity, name="toggle_activity"),
+    path("category/<int:pk>/", CategoryListView.as_view(), name="category"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

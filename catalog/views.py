@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
 from django.forms import inlineformset_factory
@@ -13,7 +15,7 @@ from django.views.generic import (
 )
 
 from catalog.forms import ProductForms, VersionProductForm, ProductModeratorForms
-from catalog.models import Product, ContactsData, VersionProduct
+from catalog.models import Product, ContactsData, VersionProduct, Category
 
 
 class HomeListView(LoginRequiredMixin, ListView):
@@ -124,12 +126,17 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("catalog:home")
 
 
-def toggle_activity(request, pk):
-    products = get_object_or_404(Product, pk=pk)
-    if products.is_active:
-        products.is_active = False
-    else:
-        products.is_active = True
+class CategoryListView(LoginRequiredMixin, ListView):
+    models = Category
 
-    products.save()
-    return redirect(reverse("catalog:home"))
+    def get_category_from_cache(self):
+        category_queryset = Category.objects.all()
+        if settings.CACHE_ENABLED:
+            key = "category_name"
+            cache_data = cache.get(key)
+            if cache_data is None:
+                cache_data = category_queryset
+                cache.set(key, cache_data)
+            return cache_data
+        return category_queryset
+

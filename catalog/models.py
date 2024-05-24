@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.utils import timezone
 
 from django.db import models
@@ -31,6 +32,9 @@ class Category(models.Model):
     class Meta:
         verbose_name = "категория"
         verbose_name_plural = "категории"
+
+    def get_absolut_url(self):
+        return reverse("category", kwargs={"pk": self.category_name})
 
 
 class Product(models.Model):

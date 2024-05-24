@@ -31,28 +31,48 @@ class HomeListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
 
-        # prefetch_related для оптимизации запросов к базе данных,
-        # чтобы получить все связанные объекты VersionProduct для каждого Product
-        # При помощи Prefetch (предварительная выборка):
-        # versionproduct_set - формсет модели VersionProduct
-        # queryset - набор запросов (в данном случае устанавливаем фильтр, чтобы получать
-        # только активные версии)
+        # Получаю id через url
+        # kwargs - это словарь из значений, переданных в url
+        pk = self.kwargs.get('pk')
 
-        products_with_versions = Product.objects.prefetch_related(
-            Prefetch(
-                "versionproduct_set",
-                queryset=VersionProduct.objects.filter(is_active_version=True),
-            )
-        ).all()
+        # Получение категории из функции с кэшем
+        category_queryset = get_category_from_cache(self.request, pk)
+
+        # Из полученного queriset получаю нужную категорию
+        id_category = category_queryset[0].pk if pk and category_queryset else None
+
+        # Если она вообще есть
+        if id_category:
+            # Получаю продукты с активной версией, связанные с
+            # моделью версий, а потом фильтрую по категории
+            products_with_versions = Product.objects.prefetch_related(
+                Prefetch(
+                    "versionproduct_set",
+                    queryset=VersionProduct.objects.filter(is_active_version=True),
+                )
+            ).filter(connection_with_category=id_category)
+        else:
+            # Если категория не найдена, будет показывать все продукты
+            products_with_versions = Product.objects.prefetch_related(
+                Prefetch(
+                    "versionproduct_set",
+                    queryset=VersionProduct.objects.filter(is_active_version=True),
+                )
+            ).all()
 
         # Добавляем эту отфильтрованную информацию в контекст
         context_data["products_with_versions"] = products_with_versions
+
         user = self.request.user
 
         if not user.has_perm("catalog.cancel_product"):
             context_data["products_with_versions"] = context_data["object_list"].filter(
                 is_active=True
             )
+
+        # Добавляем все категории в контекст для выпадающего списка
+        all_categories = get_category_from_cache(self.request)
+        context_data["categories_menu"] = all_categories
 
         return context_data
 
@@ -125,13 +145,6 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
 
     success_url = reverse_lazy("catalog:home")
-
-
-class CategoryListView(LoginRequiredMixin, ListView):
-    model = Product
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        return get_category_from_cache
 
 
 

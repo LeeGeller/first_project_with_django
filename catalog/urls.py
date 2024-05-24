@@ -10,13 +10,14 @@ from catalog.views import (
     ContactsListView,
     ProductCreateView,
     ProductUpdateView,
-    ProductDeleteView, CategoryListView,
+    ProductDeleteView,
 )
 from servicies import toggle_activity
 
 app_name = MainappConfig.name
 
 urlpatterns = [
+    path("category/<int:pk>/", HomeListView.as_view(), name="home"),
     path("", HomeListView.as_view(), name="home"),
     path("contactsdata_list/", ContactsListView.as_view(), name="contacts"),
     path("<int:pk>/product_detail/", cache_page(600)(ProductDetailView.as_view()), name="product"),
@@ -28,7 +29,6 @@ urlpatterns = [
         "<int:pk>/delete_product/", ProductDeleteView.as_view(), name="delete_product"
     ),
     path("activity/<str:model>/<int:pk>/", toggle_activity, name="toggle_activity"),
-    path("category/<int:pk>/", CategoryListView.as_view(), name="category"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

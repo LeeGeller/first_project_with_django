@@ -40,14 +40,25 @@ def email_verification(request, token):
     return redirect(reverse("users:login"))
 
 
-def get_category_from_cache(request, pk):
+def get_category_from_cache(request, pk=None):
     if settings.CACHE_ENABLED:
-        key = "categories_with_products"
+        # если id есть, находим продукты, связанные с этой категорией, если нет, то
+        # выводим все продукты
+        key = f"category_{pk}_with_products" if pk else "all_categories_with_products"
         cache_data = cache.get(key)
+
+        # Если не было закэшированных данных, формируем их и сохраняем в кэш
         if cache_data is None:
-            category_queryset = Category.objects.prefetch_related('product_set').filter(pk=pk).all()
+            if pk:
+                category_queryset = Category.objects.filter(pk=pk).prefetch_related('product_set').all()
+            else:
+                category_queryset = Category.objects.prefetch_related('product_set').all()
             cache.set(key, category_queryset)
             return category_queryset
         return cache_data
     else:
-        return Category.objects.prefetch_related('product_set').filter(pk=pk).all()
+        # Выключен CACHE_ENABLED
+        if pk:
+            return Category.objects.filter(pk=pk).prefetch_related('product_set').all()
+        else:
+            return Category.objects.prefetch_related('product_set').all()

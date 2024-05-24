@@ -1,9 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
 from django.forms import inlineformset_factory
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     ListView,
@@ -110,9 +109,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         if user == self.object.owner:
             return ProductForms
         if (
-            user.has_perm("catalog.change_product_description")
-            or user.has_perm("catalog.change_category_product")
-            or user.has_perm("catalog.cancel_product")
+                user.has_perm("catalog.change_product_description")
+                or user.has_perm("catalog.change_category_product")
+                or user.has_perm("catalog.cancel_product")
         ):
             return ProductModeratorForms
         raise PermissionDenied
@@ -122,14 +121,3 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
 
     success_url = reverse_lazy("catalog:home")
-
-
-def toggle_activity(request, pk):
-    products = get_object_or_404(Product, pk=pk)
-    if products.is_active:
-        products.is_active = False
-    else:
-        products.is_active = True
-
-    products.save()
-    return redirect(reverse("catalog:home"))

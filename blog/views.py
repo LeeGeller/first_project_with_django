@@ -1,6 +1,3 @@
-from django.http import request
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -9,9 +6,9 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from pytils.translit import slugify
 
 from blog.models import BlogPost
-from pytils.translit import slugify
 
 
 class BlogListView(ListView):
@@ -70,14 +67,3 @@ class PostUpdateView(UpdateView):
 class PostDeleteView(DeleteView):
     model = BlogPost
     success_url = reverse_lazy("blog:blogpost_list")
-
-
-def toggle_activity(request, pk):
-    blogpost = get_object_or_404(BlogPost, pk=pk)
-    if blogpost.actual_version_indicator:
-        blogpost.actual_version_indicator = False
-    else:
-        blogpost.actual_version_indicator = True
-
-    blogpost.save()
-    return redirect(reverse("blog:blogpost_list"))

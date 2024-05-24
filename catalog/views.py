@@ -1,11 +1,8 @@
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.db.models import Prefetch
 from django.forms import inlineformset_factory
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     ListView,
@@ -71,8 +68,7 @@ class HomeListView(LoginRequiredMixin, ListView):
             )
 
         # Добавляем все категории в контекст для выпадающего списка
-        all_categories = get_category_from_cache(self.request)
-        context_data["categories_menu"] = all_categories
+        context_data["categories_menu"] = context_data["products_with_versions"]
 
         return context_data
 
@@ -145,6 +141,3 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
 
     success_url = reverse_lazy("catalog:home")
-
-
-

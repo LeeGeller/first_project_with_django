@@ -1,0 +1,36 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-1 pb-md-2 mx-auto text-center">
+    <h1 class="display-4">Удаление товара</h1>
+</div>
+<main>
+    <div class="album py-3 bg-body-tertiary">
+        <div class="container text-center">
+            <div class="row row-cols-1 row-cols-sm-1">
+                <div class="col">
+                    <form class="row" method="post" enctype="multipart/form-data">
+                        <div class="card shadow-lg">
+                            <div class="card-body">
+                                {% csrf_token %}
+                                Вы уверены, что хотите удалить: {{ object.title }}
+                            </div>
+                            <div class="col">
+                                <div class="row-3 py-3">
+                                    <button type="submit" class="btn btn-sm btn-block btn-outline-danger">
+                                        Удалить
+                                    </button>
+                                    <a type="button" class="btn btn-sm btn-block btn-outline-primary"
+                                       href="{% url 'catalog:home' %}">
+                                        Отменить
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

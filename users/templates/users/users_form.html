@@ -1,0 +1,33 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-1 pb-md-2 mx-auto text-center">
+    <h1 class="display-4">Регистрация</h1>
+</div>
+<main>
+    <div class="album py-5 bg-body-tertiary">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card shadow-md">
+                            <div class="card-body">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    Подтвердить
+                                </button>
+                                <a class="btn btn-primary btn-sm" href="{% url 'catalog:home' %}">
+                                    Отменить
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

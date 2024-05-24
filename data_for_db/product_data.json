@@ -1,0 +1,44 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "product_name": "Телефон х10",
+      "product_description": "звонит и можно отправлять смс",
+      "image_preview": "catalog/1.jpg",
+      "price": "100500.67",
+      "created_at": "2024-04-06T13:41:51.385Z",
+      "updated_at": "2024-04-06T13:41:51.385Z",
+      "connection_with_category": 1,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "кот номер 1",
+      "product_description": "черно-белый борзый",
+      "image_preview": "catalog/1_ImvyJBA.jpg",
+      "price": "1000000.00",
+      "created_at": "2024-04-06T13:41:51.397Z",
+      "updated_at": "2024-04-06T13:41:51.397Z",
+      "connection_with_category": 2,
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "product_name": "большой кот",
+      "product_description": "очень толстый",
+      "image_preview": "",
+      "price": "666.00",
+      "created_at": "2024-04-06T13:41:51.399Z",
+      "updated_at": "2024-04-06T13:41:51.399Z",
+      "connection_with_category": 2,
+      "is_active": false
+    }
+  }
+]

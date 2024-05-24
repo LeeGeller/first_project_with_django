@@ -1,0 +1,49 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-1 pb-md-2 mx-auto text-center">
+    <h1 class="display-4">{{ object.title|title }}
+        <div class="float-end">
+            <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+               href="{% url 'blog:blogpost_list' %}">
+                Назад
+            </a>
+        </div>
+    </h1>
+</div>
+<main>
+    <div class="album py-4 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                <div class="col">
+                    <div class="card shadow">
+                        <img class="card-img-top img-thumbnail w-100" src="{{ object.image_preview|mymedia }}"
+                             alt="Картинок не завезли">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ object.title|title }}</h5>
+                            <p class="card-text lead text-truncate">{{ object.text_area }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">Дата создания: {{ object.created_at }}</small>
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+                               href="{% url 'blog:update_post' object.pk %}">
+                                Изменить
+                            </a>
+                            <a type="button" class="btn btn-lg btn-block btn-outline-danger"
+                               href="{% url 'blog:delete_post' object.pk %}">
+                                Удалить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

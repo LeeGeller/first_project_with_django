@@ -1,0 +1,49 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-2 py-3 pt-md-3 pb-md-3 mx-auto text-center">
+    <h1 class="display-4">{{ object.product_name|title }}</h1>
+</div>
+<main>
+    <div class="album py-6 bg-body-tertiary">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                {% if object.image_preview %}
+                <div class="col-md-4">
+                    <div class="card shadow">
+                        <img class="card-img-left img-fluid" src="{{ object.image_preview|mymedia }}"
+                             alt="Картинок не завезли">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    {% else %}
+                    <div class="col-md-12">
+                        {% endif %}
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h3 class="card-title mb-4">Описание продукта</h3>
+                                <p class="card-text">{{ object.product_description }}</p>
+
+                                <h3 class="card-title mb-4">Дополнительная информация</h3>
+                                <ul class="list-group">
+
+                                    <li class="list-group-item">
+                                        <strong>Владелец:</strong> {{ object.owner }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Дата публикации:</strong> {{ object.created_at }}
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                            <div class="card-footer bg-transparent border-0 text-center">
+                                <a href="{% url 'catalog:contacts' %}" class="btn btn-lg btn-primary">Купить за {{ object.price }} $</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+{% endblock %}

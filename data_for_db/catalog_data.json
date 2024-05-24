@@ -1,0 +1,18 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 9,
+    "fields": {
+      "category_name": "смартфоны",
+      "category_description": "телефоны разных марок"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 10,
+    "fields": {
+      "category_name": "коты",
+      "category_description": "много котов"
+    }
+  }
+]

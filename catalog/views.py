@@ -12,8 +12,8 @@ from django.views.generic import (
 )
 
 from catalog.forms import ProductForms, VersionProductForm, ProductModeratorForms
-from catalog.models import Product, ContactsData, VersionProduct, Category
-from servicies import get_category_from_cache
+from catalog.models import Product, ContactsData, VersionProduct
+from catalog.services import get_category_from_cache
 
 
 class HomeListView(LoginRequiredMixin, ListView):

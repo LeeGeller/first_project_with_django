@@ -12,7 +12,7 @@ from catalog.views import (
     ProductUpdateView,
     ProductDeleteView,
 )
-from servicies import toggle_activity
+from catalog.services import toggle_activity
 
 app_name = MainappConfig.name
 

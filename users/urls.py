@@ -2,7 +2,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 from config import settings
-from servicies import email_verification
+from catalog.services import email_verification
 from users.apps import UsersConfig
 from django.conf.urls.static import static
 

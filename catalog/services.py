@@ -7,7 +7,6 @@ from blog.models import BlogPost
 from catalog.models import Product, Category
 from config import settings
 from users.models import Users
-from django.apps import apps
 
 
 @login_required

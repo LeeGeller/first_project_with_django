@@ -5,7 +5,7 @@ from catalog.models import Category
 register = template.Library()
 
 
-@register.inclusion_tag("catalog/category_list.html", takes_context=True)
+@register.inclusion_tag("catalog/categories_list.html", takes_context=True)
 def get_category_items(context):
     categories = Category.objects.all()
 

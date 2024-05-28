@@ -1,10 +1,25 @@
-<div class="col-auto">
-    <select class="form-select p-1 px-2 btn btn-outline-primary" onchange="location = this.value;">
-        <option selected disabled>Выберите категорию</option>
-        {% for category in categories_menu %}
-            <option value="{% url 'catalog:home' pk=category.pk %}">{{ category.category_name }}</option>
+{% extends 'base.html' %}
+{% block content %}
+<form method="get">
+    <select name="category" onchange="this.form.submit()">
+        <option value="">All Categories</option>
+        {% for category in categories %}
+            <option value="{{ category.pk }}">{{ category.name }}</option>
         {% endfor %}
     </select>
+</form>
+
+<div>
+    {% if current_category %}
+        <h1>Products in {{ categories|get_by_pk:current_category }}</h1>
+        {% for product in products_with_versions %}
+            <p>{{ product.product_name }}</p>
+        {% endfor %}
+    {% else %}
+        <h1>All Products</h1>
+        {% for product in products_with_versions %}
+            <p>{{ product.product_name }}</p>
+        {% endfor %}
+    {% endif %}
 </div>
-
-
+{% endblock %}

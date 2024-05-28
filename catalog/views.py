@@ -12,65 +12,52 @@ from django.views.generic import (
 )
 
 from catalog.forms import ProductForms, VersionProductForm, ProductModeratorForms
-from catalog.models import Product, ContactsData, VersionProduct
+from catalog.models import Product, ContactsData, VersionProduct, Category
 from catalog.services import get_category_from_cache
 
 
 class HomeListView(LoginRequiredMixin, ListView):
     model = Product
-    fields = (
-        "product_name",
-        "price",
-    )
     template_name = "catalog/home.html"
     login_url = "users:login"
+    context_object_name = 'products_with_versions'
 
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-
-        # Получаю id через url
-        # kwargs - это словарь из значений, переданных в url
+    def get_queryset(self):
+        # Получаю id категории из URL
         pk = self.kwargs.get('pk')
 
-        # Получение категории из функции с кэшем
-        category_queryset = get_category_from_cache(self.request, pk)
-
-        # Из полученного queriset получаю нужную категорию
-        id_category = category_queryset[0].pk if pk and category_queryset else None
-
-        # Если она вообще есть
-        if id_category:
-            # Получаю продукты с активной версией, связанные с
-            # моделью версий, а потом фильтрую по категории
-            products_with_versions = Product.objects.prefetch_related(
-                Prefetch(
-                    "versionproduct_set",
-                    queryset=VersionProduct.objects.filter(is_active_version=True),
-                )
-            ).filter(connection_with_category=id_category)
+        if pk:
+            # Фильтрую продукты по категории
+            queryset = Product.objects.filter(connection_with_category=pk)
         else:
-            # Если категория не найдена, будет показывать все продукты
-            products_with_versions = Product.objects.prefetch_related(
-                Prefetch(
-                    "versionproduct_set",
-                    queryset=VersionProduct.objects.filter(is_active_version=True),
-                )
-            ).all()
+            # Если категория не указана, показываю все продукты
+            queryset = Product.objects.all()
 
-        # Добавляем эту отфильтрованную информацию в контекст
-        context_data["products_with_versions"] = products_with_versions
-
-        user = self.request.user
-
-        if not user.has_perm("catalog.cancel_product"):
-            context_data["products_with_versions"] = context_data["object_list"].filter(
-                is_active=True
+        # Оптимизация запроса
+        queryset = queryset.prefetch_related(
+            Prefetch(
+                "versionproduct_set",
+                queryset=VersionProduct.objects.filter(is_active_version=True),
             )
+        )
 
-        # Добавляем все категории в контекст для выпадающего списка
-        context_data["categories_menu"] = context_data["products_with_versions"]
+        # Фильтрация по активности продуктов для пользователей без соответствующих прав
+        user = self.request.user
+        if not user.has_perm("catalog.cancel_product"):
+            queryset = queryset.filter(is_active=True)
 
-        return context_data
+        return queryset
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+    template_name = "catalog/categories_list.html"
+    login_url = "users:login"
+    context_object_name = 'categories'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_category'] = self.kwargs.get('pk')
+        return get_category_from_cache
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):

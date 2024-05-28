@@ -1,0 +1,10 @@
+<div class="col-auto">
+    <select class="form-select p-1 px-2 btn btn-outline-primary" onchange="location = this.value;">
+        <option selected disabled>Выберите категорию</option>
+        {% for category in categories_menu %}
+            <option value="{% url 'catalog:category' pk=category.pk %}">{{ category.category_name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+

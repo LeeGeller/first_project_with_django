@@ -3,16 +3,16 @@
     "model": "catalog.category",
     "pk": 1,
     "fields": {
-      "category_name": "смартфоны",
-      "category_description": "телефоны разных марок"
+      "category_name": "Phones",
+      "category_description": "Phones"
     }
   },
   {
     "model": "catalog.category",
     "pk": 2,
     "fields": {
-      "category_name": "коты",
-      "category_description": "много котов"
+      "category_name": "Cats",
+      "category_description": "Cats"
     }
   }
 ]

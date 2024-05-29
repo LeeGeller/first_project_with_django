@@ -34,7 +34,7 @@ class Category(models.Model):
         verbose_name_plural = "категории"
 
     def get_absolute_url(self):
-        return reverse("category", kwargs={"pk": self.pk})
+        return reverse("category_data.json", kwargs={"pk": self.pk})
 
 
 class Product(models.Model):
@@ -74,7 +74,7 @@ class Product(models.Model):
         permissions = [
             ("cancel_product", "Can cancel product"),
             ("change_product_description", "Can change product description"),
-            ("change_category_product", "Can change category product"),
+            ("change_category_product", "Can change category_data.json product"),
         ]
 
 

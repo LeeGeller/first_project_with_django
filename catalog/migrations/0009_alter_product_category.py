@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='product',
-            name='category',
+            name='category_data.json',
             field=models.CharField(blank=True, max_length=100, null=True, verbose_name='Категория'),
         ),
     ]

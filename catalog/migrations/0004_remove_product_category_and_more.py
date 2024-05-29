@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RemoveField(
             model_name='product',
-            name='category',
+            name='category_data.json',
         ),
         migrations.AlterField(
             model_name='product',
             name='connection_with_category',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalog.category', verbose_name='Категория'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalog.category_data.json', verbose_name='Категория'),
         ),
     ]

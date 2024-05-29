@@ -30,11 +30,11 @@ class Migration(migrations.Migration):
                 ('product_name', models.CharField(max_length=100, verbose_name='Название продукта')),
                 ('product_description', models.TextField(verbose_name='Описание продукта')),
                 ('image_preview', models.ImageField(upload_to='catalog/', verbose_name='превью')),
-                ('category', models.CharField(max_length=100, verbose_name='Категория')),
+                ('category_data.json', models.CharField(max_length=100, verbose_name='Категория')),
                 ('price', models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Цена за покупку')),
                 ('created_at', models.DateTimeField(verbose_name='Дата создания')),
                 ('updated_at', models.DateTimeField(verbose_name='Дата последнего изменения')),
-                ('connection_with_category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalog.category')),
+                ('connection_with_category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='catalog.category_data.json')),
             ],
             options={
                 'verbose_name': 'продукт',

@@ -15,7 +15,7 @@ class Command(BaseCommand):
         and read it.
         :return: list with info about prducts.
         """
-        with open(DATA_PRODUCT, encoding='windows-1251') as file:
+        with open(DATA_PRODUCT, encoding='utf-8') as file:
             file_info = json.load(file)
         return [info for info in file_info]
 

@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='product',
-            name='category',
+            name='category_data.json',
             field=models.CharField(blank=True, default=None, max_length=100, null=True, verbose_name='Категория'),
         ),
     ]

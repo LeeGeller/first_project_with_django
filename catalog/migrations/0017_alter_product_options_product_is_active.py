@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
                 "permissions": [
                     ("cancel_product", "Can cancel product"),
                     ("change_product_description", "Can change product description"),
-                    ("change_category_product", "Can change category product"),
+                    ("change_category_product", "Can change category_data.json product"),
                 ],
                 "verbose_name": "продукт",
                 "verbose_name_plural": "продукты",

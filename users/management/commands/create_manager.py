@@ -6,6 +6,9 @@ from users.models import Users
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+
+        group, created = Group.objects.get_or_create(name="moderators")
+
         user = Users.objects.create(
             email="manager@gmail.com",
             country="Россия",

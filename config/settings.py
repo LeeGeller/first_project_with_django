@@ -22,7 +22,7 @@ dot_env = os.path.join(BASE_DIR, '.env')
 load_dotenv(dotenv_path=dot_env)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^a-)-($8ej#f4srrkwd64wz8g4_!iydj&)!u3$q+oz#^pc4imx"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
@@ -156,13 +156,13 @@ EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS") == "True"
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-CACHE_ENABLED = True
+CACHE_ENABLED = os.getenv("CACHE_ENABLED") == "True"
 
 if CACHE_ENABLED:
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
-            "KEY_PREFIX": "my_prefix",
+            "BACKEND": os.getenv("BACKEND"),
+            "LOCATION": os.getenv("LOCATION"),
+            "KEY_PREFIX": os.getenv("KEY_PREFIX"),
         }
     }
